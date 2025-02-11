@@ -1,0 +1,15 @@
+[package]
+name = "elastic_hash_rs"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Elastic Hashing from Optimal Bounds for Open Addressing without Reordering"
+repository = "https://github.com/cowang4/elastic_hash_rs"
+authors = ["Greg Cowan"]
+readme = "README.md"
+keywords = ["elastic", "hashing", "hashtable", "hash", "elastic hash"]
+categories = ["algorithms", "data-structures"]
+
+
+[dependencies]
+rand = "0.9"
