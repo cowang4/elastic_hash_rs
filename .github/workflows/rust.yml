@@ -14,7 +14,7 @@ jobs:
     - name: setup-mold
       uses: rui314/setup-mold@v1
       with:
-        make_default: true
+        make-default: true
     - uses: actions/checkout@v4
     - run: rustup toolchain install stable --profile minimal --no-self-update
     - uses: Swatinem/rust-cache@v2
