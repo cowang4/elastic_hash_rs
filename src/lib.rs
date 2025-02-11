@@ -8,7 +8,7 @@ use rand::distr::Distribution;
 const PROBE_LIMIT: usize = 10;
 
 #[derive(Debug)]
-struct ElasticHashTable<K, V> {
+pub struct ElasticHashTable<K, V> {
     buckets: Vec<Option<(K, V)>>,
     size: usize,
     arrays: Vec<usize>,
@@ -57,7 +57,7 @@ impl<K: Eq + Hash + Clone, V: Clone> ElasticHashTable<K, V> {
 
     /// Insert a key into the table. Returns true if the key was inserted,
     /// or false if it was already present or if no slot was available.
-    fn insert(&mut self, key: K, value: V) -> Result<(), Error> {
+    pub fn insert(&mut self, key: K, value: V) -> Result<(), Error> {
         for (i, _array_size) in self.arrays.iter().enumerate() {
             let probes = self.probe_sequence(&key, i);
             for probe in probes {
@@ -78,7 +78,7 @@ impl<K: Eq + Hash + Clone, V: Clone> ElasticHashTable<K, V> {
 
     /// Search for a key in the table.
     /// Returns the value if found, or None if not found.
-    fn get(&self, key: &K) -> Option<&V> {
+    pub fn get(&self, key: &K) -> Option<&V> {
         for (i, _array_size) in self.arrays.iter().enumerate() {
             let probes = self.probe_sequence(key, i);
             for probe in probes {
@@ -93,7 +93,7 @@ impl<K: Eq + Hash + Clone, V: Clone> ElasticHashTable<K, V> {
     }
 }
 
-enum Error {
+pub enum Error {
     KeyAlreadyInserted,
     TableFull,
 }
@@ -111,8 +111,11 @@ mod tests {
         assert!(hash_table.insert("key2", "value2").is_ok(), "Failed to insert key2");
         assert!(hash_table.insert("key3", "value3").is_ok(), "Failed to insert key3");
 
-        assert_eq!(Some("value1"), hash_table.get("key1"));
-        println!("key2: {:?}", hash_table.get(&"key2"));
-        println!("key3: {:?}", hash_table.get(&"key3"));
+        assert_eq!("[None, None, None, None, None, Some((\"key1\", \"value1\")), None, None, None, None, Some((\"key3\", \"value3\")), None, Some((\"key2\", \"value2\")), None, None, None]", format!("{:?}", hash_table.buckets));
+
+        assert_eq!(Some(&"value1"), hash_table.get(&"key1"));
+        assert_eq!(Some(&"value2"), hash_table.get(&"key2"));
+        assert_eq!(Some(&"value3"), hash_table.get(&"key3"));
+        assert_eq!(None, hash_table.get(&"key4"));
     }
 }
