@@ -7,7 +7,7 @@ description = "Elastic Hashing from Optimal Bounds for Open Addressing without R
 repository = "https://github.com/cowang4/elastic_hash_rs"
 authors = ["Greg Cowan"]
 readme = "README.md"
-keywords = ["elastic", "hashing", "hashtable", "hash", "elastic hash"]
+keywords = ["elastic", "hashing", "hashtable", "hash", "elastichash"]
 categories = ["algorithms", "data-structures"]
 
 
