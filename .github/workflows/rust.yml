@@ -1,0 +1,26 @@
+name: Rust
+
+on: [push]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: setup-mold
+      uses: rui314/setup-mold@v1
+      with:
+        make_default: true
+    - uses: actions/checkout@v4
+    - run: rustup toolchain install stable --profile minimal --no-self-update
+    - uses: Swatinem/rust-cache@v2
+      with:
+        cache-on-failure: "true"
+    - name: Build
+      run: cargo build --verbose
+    - name: Test
+      run: cargo test --verbose
